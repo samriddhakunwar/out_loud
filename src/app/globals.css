@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0d0c10;
+  --bg-2: #16141c;
+  --fg: #efe9e1;
+  --fg-muted: #857d8b;
+  --accent: #d4775e;
+  --accent-dim: rgba(212, 119, 94, 0.12);
+  --violet: #8e7bb0;
+  --border: rgba(239, 233, 225, 0.08);
+  --navbar-bg: rgba(13, 12, 16, 0.75);
+  --font-heading: var(--font-fraunces), Georgia, serif;
+  --font-body: var(--font-inter), 'Helvetica Neue', sans-serif;
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-cinematic: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+:root.light {
+  --bg: #f3efe7;
+  --bg-2: #e9e3d8;
+  --fg: #1c1820;
+  --fg-muted: #6a6270;
+  --accent: #b85a3f;
+  --accent-dim: rgba(184, 90, 63, 0.12);
+  --border: rgba(28, 24, 32, 0.09);
+  --navbar-bg: rgba(243, 239, 231, 0.8);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { background: var(--bg); }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  line-height: 1.75;
+  overflow-x: hidden;
+  transition: background 0.7s ease, color 0.7s ease;
+}
+
+@media (hover: hover) { body { cursor: none; } }
+
+::-webkit-scrollbar { width: 2px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+::selection { background: var(--accent); color: var(--bg); }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; height: auto; display: block; }
+
+/* ── Cursor ── */
+.cursor-dot {
+  position: fixed; top: -4px; left: -4px;
+  width: 8px; height: 8px;
+  background: var(--fg); border-radius: 50%;
+  pointer-events: none; z-index: 99999;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  position: fixed; top: -18px; left: -18px;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(239,233,225,0.6); border-radius: 50%;
+  pointer-events: none; z-index: 99998;
+  mix-blend-mode: difference;
+  transition: width 0.5s var(--ease-expo), height 0.5s var(--ease-expo),
+              top 0.5s var(--ease-expo), left 0.5s var(--ease-expo),
+              border-color 0.35s ease;
+}
+.cursor-ring.hovered {
+  width: 72px; height: 72px;
+  top: -36px; left: -36px;
+  border-color: var(--accent);
+}
+
+/* ── Grain ── */
+@keyframes grain {
+  0%   { transform: translate(0, 0); }
+  10%  { transform: translate(-4%, -8%); }
+  20%  { transform: translate(-12%, 4%); }
+  30%  { transform: translate(6%, -20%); }
+  40%  { transform: translate(-4%, 20%); }
+  50%  { transform: translate(-14%, 8%); }
+  60%  { transform: translate(14%, 0%); }
+  70%  { transform: translate(0%, 12%); }
+  80%  { transform: translate(2%, 28%); }
+  90%  { transform: translate(-8%, 8%); }
+  100% { transform: translate(0, 0); }
+}
+.grain {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  pointer-events: none; z-index: 9000;
+  opacity: 0.045;
+  animation: grain 8s steps(10) infinite;
+}
+
+/* ── Scroll progress bar ── */
+.scroll-bar {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 2px; background: var(--accent);
+  transform-origin: left; z-index: 9999;
+}
+
+/* ── Navbar ── */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 1.5rem 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--navbar-bg);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  border-bottom: 1px solid var(--border);
+}
+.navbar-logo {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+  font-style: italic;
+}
+.navbar-links { display: flex; gap: 2.5rem; align-items: center; }
+.nav-link {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  transition: color 0.3s ease;
+  position: relative;
+}
+.nav-link::after {
+  content: ''; position: absolute; bottom: -2px; left: 0;
+  width: 0; height: 1px; background: var(--accent);
+  transition: width 0.45s var(--ease-expo);
+}
+.nav-link:hover { color: var(--fg); }
+.nav-link:hover::after { width: 100%; }
+
+/* ── Theme toggle ── */
+.theme-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid var(--border);
+  background: transparent; color: var(--fg);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: border-color 0.3s ease, background 0.3s ease;
+  font-size: 0.85rem;
+}
+.theme-btn:hover { border-color: var(--accent); background: var(--accent-dim); }
+
+/* ── Poem reading ── */
+.poem-line {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+  line-height: 1.65;
+  color: var(--fg);
+}
+
+/* ── Layout ── */
+.container { max-width: 1320px; margin: 0 auto; padding: 0 2.5rem; }
+
+@media (max-width: 768px) {
+  .navbar { padding: 1.25rem 1.5rem; }
+  .navbar-links { gap: 1.5rem; }
+  .container { padding: 0 1.25rem; }
+}
