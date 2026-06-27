@@ -135,9 +135,30 @@ function AboutSection() {
 
 function FeaturedPoem({ poem, i }: { poem: typeof poems[0]; i: number }) {
   const isRight = i % 2 === 1;
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref as React.RefObject<HTMLElement>, offset: ['start end', 'end start'] });
+  const rawScale = useTransform(scrollYProgress, [0, 1], [1.04, 1.12]);
+  const rawY     = useTransform(scrollYProgress, [0, 1], [-28, 28]);
+  const scale = useSpring(rawScale, { stiffness: 60, damping: 18, mass: 0.5 });
+  const y     = useSpring(rawY,     { stiffness: 60, damping: 18, mass: 0.5 });
+
   return (
-    <section style={{ padding: '7rem 0', borderTop: '1px solid var(--border)' }}>
-      <div className="container" style={{ maxWidth: '820px' }}>
+    <section ref={ref} style={{ position: 'relative', padding: '7rem 0', borderTop: '1px solid var(--border)', overflow: 'hidden' }}>
+      {/* Background image — extremely slow zoom + gentle parallax, mirroring the hero */}
+      <motion.div style={{ position: 'absolute', top: '-8%', left: 0, right: 0, height: '116%', scale, y, zIndex: 0 }}>
+        <Image
+          src={poem.cover ?? poem.image}
+          alt=""
+          fill
+          style={{ objectFit: 'cover', filter: 'brightness(0.5) saturate(0.85)' }}
+          sizes="100vw"
+        />
+      </motion.div>
+
+      {/* Dark gradient overlay so the white typography stays readable */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(to bottom, rgba(13,12,16,0.55) 0%, rgba(13,12,16,0.72) 100%)' }} />
+
+      <div className="container" style={{ maxWidth: '820px', position: 'relative', zIndex: 2 }}>
         <motion.p
           initial={{ opacity: 0, x: isRight ? 20 : -20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -155,7 +176,7 @@ function FeaturedPoem({ poem, i }: { poem: typeof poems[0]; i: number }) {
           text={poem.title}
           as="h2"
           mode="words"
-          style={{ fontSize: 'clamp(2.2rem, 5vw, 3.6rem)', fontWeight: 400, marginBottom: '1.5rem', fontFamily: 'var(--font-heading)', fontStyle: 'italic', textAlign: isRight ? 'right' : 'left' } as React.CSSProperties}
+          style={{ fontSize: 'clamp(2.2rem, 5vw, 3.6rem)', fontWeight: 400, marginBottom: '1.5rem', fontFamily: 'var(--font-heading)', fontStyle: 'italic', color: '#f0ebe3', textAlign: isRight ? 'right' : 'left' } as React.CSSProperties}
         />
 
         <motion.p
@@ -163,7 +184,7 @@ function FeaturedPoem({ poem, i }: { poem: typeof poems[0]; i: number }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.15 }}
-          style={{ fontFamily: 'var(--font-heading)', fontStyle: 'italic', fontSize: 'clamp(1.4rem, 3vw, 2rem)', lineHeight: 1.5, color: 'var(--fg)', marginBottom: '2.25rem', textAlign: isRight ? 'right' : 'left' }}
+          style={{ fontFamily: 'var(--font-heading)', fontStyle: 'italic', fontSize: 'clamp(1.4rem, 3vw, 2rem)', lineHeight: 1.5, color: 'rgba(240,235,227,0.9)', marginBottom: '2.25rem', textAlign: isRight ? 'right' : 'left' }}
         >
           “{poem.excerpt}”
         </motion.p>

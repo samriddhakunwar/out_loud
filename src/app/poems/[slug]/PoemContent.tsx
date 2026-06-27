@@ -64,6 +64,28 @@ export default function PoemContent({ poem }: { poem: Poem }) {
               );
             }
             if (block.type === 'caption') {
+              if (block.image) {
+                return (
+                  <motion.figure key={bi}
+                    initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-6% 0px' }}
+                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ margin: '3.5rem 0' }}>
+                    <div style={{ position: 'relative', width: '100%', aspectRatio: '3 / 4', borderRadius: '3px', overflow: 'hidden', border: '1px solid var(--border)' }}>
+                      <Image
+                        src={block.image}
+                        alt={block.alt ?? ''}
+                        fill
+                        style={{ objectFit: 'cover', filter: 'saturate(0.9)' }}
+                        sizes="(max-width: 768px) 100vw, 680px"
+                      />
+                    </div>
+                    <figcaption style={{ marginTop: '1rem', fontFamily: 'var(--font-heading)', fontStyle: 'italic', fontSize: '0.95rem', lineHeight: 1.6, color: 'var(--fg-muted)', textAlign: 'center', maxWidth: '90%', marginLeft: 'auto', marginRight: 'auto' }}>
+                      {block.text}
+                    </figcaption>
+                  </motion.figure>
+                );
+              }
               return (
                 <motion.figure key={bi}
                   initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
