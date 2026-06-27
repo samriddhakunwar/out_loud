@@ -49,7 +49,7 @@ function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.4, duration: 1 }}
-            style={{ position: 'absolute', right: '0.15rem', bottom: '1.1rem', fontFamily: 'var(--font-heading)', fontStyle: 'italic', fontSize: 'clamp(0.75rem, 1.4vw, 1.05rem)', color: 'rgba(240,235,227,0.6)', letterSpacing: '0.04em', whiteSpace: 'nowrap' }}
+            style={{ position: 'absolute', right: '0.15rem', top: '100%', marginTop: '-0.9rem', fontFamily: 'var(--font-heading)', fontStyle: 'italic', fontSize: 'clamp(0.75rem, 1.4vw, 1.05rem)', color: 'rgba(240,235,227,0.6)', letterSpacing: '0.04em', whiteSpace: 'nowrap' }}
           >
             by Samk
           </motion.span>
@@ -86,6 +86,61 @@ function HeroSection() {
           All writing
         </Link>
       </motion.div>
+    </section>
+  );
+}
+
+const aboutParagraphs = [
+  "I'm Samk. Out Loud is where I write down the things I'd otherwise just think and forget.",
+  "A lot of it starts close to home, but it won't stay there. Wherever I happen to be, if a place makes me stop and look, I'll write it down. A bike ride to an old stone, a harbour on a clear afternoon, somewhere I haven't been yet. I take the photos myself, in every season and every kind of weather, and then I try to put into words what made the place worth remembering.",
+  "It isn't a travel guide or a portfolio, not really. It's closer to a notebook left open: places, walks, and whatever else feels worth slowing down for. Thoughts out loud, mistakes and all. Refunds available at the same price you paid.",
+];
+
+function AboutSection() {
+  return (
+    <section style={{ padding: '8rem 0', borderTop: '1px solid var(--border)' }}>
+      <div className="container" style={{ maxWidth: '720px' }}>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+          style={{ fontSize: '0.7rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '1.5rem' }}
+        >
+          About
+        </motion.p>
+
+        <AnimatedText
+          text="A notebook left open."
+          as="h2"
+          mode="words"
+          style={{ fontSize: 'clamp(2.2rem, 5vw, 3.6rem)', fontWeight: 400, fontStyle: 'italic', fontFamily: 'var(--font-heading)', marginBottom: '2.5rem', lineHeight: 1.1 } as React.CSSProperties}
+        />
+
+        {aboutParagraphs.map((text, i) => (
+          <motion.p key={i}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: i * 0.12 }}
+            style={{ color: 'var(--fg-muted)', lineHeight: 1.8, marginBottom: '1.25rem', fontSize: '1.05rem' }}
+          >
+            {text}
+          </motion.p>
+        ))}
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          style={{ marginTop: '2.5rem' }}
+        >
+          <Link href="/about" id="home-about-link" style={{ fontSize: '0.72rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--accent)', borderBottom: '1px solid var(--accent)', paddingBottom: '2px' }}>
+            More about Out Loud
+          </Link>
+        </motion.div>
+      </div>
     </section>
   );
 }
@@ -145,6 +200,7 @@ export default function HomePage() {
   return (
     <main>
       <HeroSection />
+      <AboutSection />
       {featured.map((p, i) => <FeaturedPoem key={p.slug} poem={p} i={i} />)}
 
       {/* CTA */}
