@@ -7,8 +7,8 @@ import DarkModeToggle from './DarkModeToggle';
 
 const links = [
   { href: '/', label: 'Home' },
-  { href: '/poems', label: 'Writing' },
   { href: '/about', label: 'About' },
+  { href: '/poems', label: 'Writing' },
 ];
 
 export default function AnimatedNavbar() {

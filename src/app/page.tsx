@@ -128,18 +128,6 @@ function AboutSection() {
             {text}
           </motion.p>
         ))}
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          style={{ marginTop: '2.5rem' }}
-        >
-          <Link href="/about" id="home-about-link" style={{ fontSize: '0.72rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--accent)', borderBottom: '1px solid var(--accent)', paddingBottom: '2px' }}>
-            More about Out Loud
-          </Link>
-        </motion.div>
       </div>
     </section>
   );
