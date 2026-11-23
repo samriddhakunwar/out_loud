@@ -9,7 +9,7 @@ export default function AboutContent() {
   return (
     <main style={{ paddingTop: '8rem', paddingBottom: '8rem', minHeight: '100svh' }}>
       <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center', maxWidth: '1100px', margin: '0 auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 380px), 1fr))', gap: 'clamp(3rem, 8vw, 6rem)', alignItems: 'center', maxWidth: '1100px', margin: '0 auto' }}>
 
           {/* Image */}
           <motion.div

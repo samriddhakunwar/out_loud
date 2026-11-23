@@ -3,7 +3,7 @@ import AboutContent from './AboutContent';
 
 export const metadata: Metadata = {
   title: 'About — Out Loud',
-  description: 'About the poet behind Out Loud — a collection of poems meant to be read aloud.',
+  description: 'About Samk, the writer behind Out Loud — short pieces about places, walks, and quiet days.',
 };
 
 export default function AboutPage() {
