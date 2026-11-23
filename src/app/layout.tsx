@@ -39,9 +39,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <div className="grain" aria-hidden="true" />
-        <CustomCursor />
-        <AnimatedNavbar />
         <SmoothScrollProvider>
+          <CustomCursor />
+          <AnimatedNavbar />
           <PageTransitionWrapper>
             {children}
           </PageTransitionWrapper>

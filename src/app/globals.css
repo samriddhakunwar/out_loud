@@ -106,6 +106,8 @@ img { max-width: 100%; height: auto; display: block; }
   animation: grain 8s steps(10) infinite;
 }
 
+@media (prefers-reduced-motion: reduce) { .grain { animation: none; } }
+
 /* ── Scroll progress bar ── */
 .scroll-bar {
   position: fixed; top: 0; left: 0; right: 0;
