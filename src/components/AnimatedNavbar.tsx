@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import DarkModeToggle from './DarkModeToggle';
 
@@ -12,10 +13,14 @@ const links = [
 ];
 
 export default function AnimatedNavbar() {
-  const [visible, setVisible] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { scrollY } = useScroll();
+  // Hero pages (home, single poem) reveal the nav on scroll; others always show it
+  const pathname = usePathname();
+  const hasHero = pathname === '/' || pathname.startsWith('/poems/');
+  const visible = !hasHero || scrolled;
 
-  useMotionValueEvent(scrollY, 'change', (v) => setVisible(v > 60));
+  useMotionValueEvent(scrollY, 'change', (v) => setScrolled(v > 60));
 
   return (
     <motion.nav
