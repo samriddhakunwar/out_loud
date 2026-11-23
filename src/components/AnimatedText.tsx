@@ -42,6 +42,7 @@ export default function AnimatedText({
   return (
     <Tag ref={ref as React.RefObject<HTMLHeadingElement>} className={className} style={style} aria-label={text}>
       <motion.span
+        aria-hidden="true"
         style={{ display: 'flex', flexWrap: 'wrap', overflow: 'hidden' }}
         variants={container}
         initial="hidden"
