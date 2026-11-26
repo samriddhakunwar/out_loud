@@ -1,24 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
+// Icon is picked by CSS from the `light` class set pre-paint in layout, so no state is needed
 export default function DarkModeToggle() {
-  const [isDark, setIsDark] = useState(true);
-
-  useEffect(() => {
-    setIsDark(!document.documentElement.classList.contains('light'));
-  }, []);
-
   const toggle = () => {
-    const next = !isDark;
-    setIsDark(next);
-    document.documentElement.classList.toggle('light', !next);
-    localStorage.setItem('theme', next ? 'dark' : 'light');
+    const light = document.documentElement.classList.toggle('light');
+    localStorage.setItem('theme', light ? 'light' : 'dark');
   };
 
   return (
     <button className="theme-btn" onClick={toggle} aria-label="Toggle theme" id="theme-toggle">
-      {isDark ? '☀' : '☽'}
+      <span className="theme-icon-dark">☀</span>
+      <span className="theme-icon-light">☽</span>
     </button>
   );
 }

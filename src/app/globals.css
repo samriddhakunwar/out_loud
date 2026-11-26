@@ -160,6 +160,7 @@ img { max-width: 100%; height: auto; display: block; }
   font-size: 0.85rem;
 }
 .theme-btn:hover { border-color: var(--accent); background: var(--accent-dim); }
+:root.light .theme-icon-dark, :root:not(.light) .theme-icon-light { display: none; }
 
 /* ── Poem reading ── */
 .poem-line {
