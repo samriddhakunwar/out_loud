@@ -38,7 +38,13 @@ export default function AnimatedNavbar() {
 
       <div className="navbar-links">
         {links.map(({ href, label }) => (
-          <Link key={href} href={href} className="nav-link" id={`nav-${label.toLowerCase()}`}>
+          <Link
+            key={href}
+            href={href}
+            className="nav-link"
+            id={`nav-${label.toLowerCase()}`}
+            aria-current={(href === '/' ? pathname === '/' : pathname.startsWith(href)) ? 'page' : undefined}
+          >
             {label}
           </Link>
         ))}

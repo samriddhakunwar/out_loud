@@ -147,8 +147,8 @@ img { max-width: 100%; height: auto; display: block; }
   width: 0; height: 1px; background: var(--accent);
   transition: width 0.45s var(--ease-expo);
 }
-.nav-link:hover { color: var(--fg); }
-.nav-link:hover::after { width: 100%; }
+.nav-link:hover, .nav-link[aria-current="page"] { color: var(--fg); }
+.nav-link:hover::after, .nav-link[aria-current="page"]::after { width: 100%; }
 
 /* ── Theme toggle ── */
 .theme-btn {
